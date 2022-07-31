@@ -200,8 +200,8 @@ export class SchedulerComponent implements OnInit {
     this.isResetEnabled = false;
 
     if(this.isCurrentschedulePushed){
-        this.events.pop();
-        console.log(this.events);
+        
+        this.resetEvent.emit(this.createUserEvent())
         this.isCurrentschedulePushed = false;
     }
 
@@ -210,7 +210,7 @@ export class SchedulerComponent implements OnInit {
   validateSelection(date: Date) {
 
     if(this.isCurrentschedulePushed){
-        this.events.pop();
+        this.resetEvent.emit(this.createUserEvent());
         this.isCurrentschedulePushed=false;
     }
     let currentSelectedDate = formatDate(date, 'short', 'en')
@@ -235,12 +235,8 @@ export class SchedulerComponent implements OnInit {
 
     if( this.startDate !== '' && this.endDate !== '') {
         this.isScheduleEnabled = true;
-
-        const userEvent = new UserSchedule();
-        userEvent.startDate = this.startDate;
-        userEvent.endDate = this.endDate;
-
-        this.scheduleEvent.emit(userEvent);
+        this.scheduleEvent.emit(this.createUserEvent());
+        this.isCurrentschedulePushed=true;
         console.log(this.events);
     }
     // this.isScheduleEnabled = this.startDate !== '' && this.endDate !== '' ? true : false
@@ -250,6 +246,14 @@ export class SchedulerComponent implements OnInit {
     console.log('End Date', this.endDate);
   }
 
+
+  createUserEvent(){
+    const userEvent = new UserSchedule();
+    userEvent.startDate = this.startDate;
+    userEvent.endDate = this.endDate;
+    userEvent.isSchedulePushed = this.isCurrentschedulePushed;
+    return userEvent;
+  }
   
   eventClicked(action: string, event: CalendarSchedulerEvent): void {
       console.log('eventClicked Action', action);

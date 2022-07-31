@@ -90,6 +90,11 @@ export class AppComponent implements OnInit {
             isDisabled: true
             };
         this.events.push(customeEvent);
-        // console.log(this.events)
       }
+
+    resetUserSchedule(data: UserSchedule){
+
+        this.events.pop();
+        
+    }
 }
