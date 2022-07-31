@@ -1,2 +1,3 @@
 
-<div class="app-container"><app-scheduler [events]="events" (scheduleEvent)="formUserSelectedEvent($event)"></app-scheduler></div>
+<div class="app-container"><app-scheduler [events]="events" (scheduleEvent)="formUserSelectedEvent($event)"
+    (resetEvent)="resetUserSchedule($event)"></app-scheduler></div>

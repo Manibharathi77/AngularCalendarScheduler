@@ -65,9 +65,9 @@ export class AppComponent implements OnInit {
             end: new Date(event.end_timestamp),
             title: event.title,
             content: event.content,
-            color: { primary: '#3f51b5', secondary: '#3f51b5' },
+            color: { primary: '#ff6666', secondary: '#6699ff' },
             actions: this.actions,
-            // status: 'ok' as CalendarSchedulerEventStatus,s
+            status: 'ok' as CalendarSchedulerEventStatus,
             isClickable: false,
             isDisabled: true
             };
@@ -75,45 +75,50 @@ export class AppComponent implements OnInit {
             console.log(customeEvent);
             customScheduleEvent.push(customeEvent)
         }
+        //custom User event
+        let customeEvent1 =  <CalendarSchedulerEvent> {
+            id: "USERSELECTED",
+            start: null,
+            end: null,
+            title: "Current Selection",
+            content: "this is your current selection",
+            color: { primary: '#ff6666', secondary: '#00cc66' },
+            actions: this.actions,
+            status: 'ok' as CalendarSchedulerEventStatus,
+            isClickable: false,
+            isDisabled: true
+            }
+        customScheduleEvent.push(customeEvent1);
         this.events = customScheduleEvent;
     }
 
    
     formUserSelectedEvent(data: UserSchedule){
 
-        let customeEvent =  <CalendarSchedulerEvent> {
-            id: "88",
-            start: new Date(data.startDate),
-            end: new Date(data.endDate),
-            title: "Current Selection",
-            content: "this is your current selection",
-            color: { primary: '#009900', secondary: '#009900' },
-            actions: this.actions,
-            // status: 'ok' as CalendarSchedulerEventStatus,
-            isClickable: false,
-            isDisabled: true
-            };
-        this.events.push(customeEvent);
+        
+        let customeEvent = this.events.pop();
+        if(customeEvent.id == "USERSELECTED"){
+            customeEvent.start = new Date(data.startDate);
+            customeEvent.end = new Date(data.endDate);
+             
+            this.events.push(customeEvent);
+            }
+
+        
         this.appScheduler.refreshEvents();
       }
 
     resetUserSchedule(data: UserSchedule){
 
-        this.events.pop();
-        let customeEvent =  <CalendarSchedulerEvent> {
-            id: "88",
-            start: null,
-            end: null,
-            title: "Current Selection",
-            content: "this is your current selection",
-            color: { primary: '#3f51b5', secondary: '#3f51b5' },
-            actions: this.actions,
-            // status: 'ok' as CalendarSchedulerEventStatus,
-            isClickable: false,
-            isDisabled: true
-            };
-        this.events.push(customeEvent);
-        this.appScheduler.refreshEvents();
+        let customeEvent = this.events.pop();
+        if(customeEvent.id == "USERSELECTED"){
+            customeEvent.start = null;
+            customeEvent.end = null; 
+            this.events.push(customeEvent);              
+            this.appScheduler.refreshEvents();
+        } else{
+            this.events.push(customeEvent);              
+        }
         
     }
 }

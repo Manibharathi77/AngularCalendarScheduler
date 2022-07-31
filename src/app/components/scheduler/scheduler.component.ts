@@ -198,21 +198,17 @@ export class SchedulerComponent implements OnInit {
     this.endDate = '';
     this.isScheduleEnabled = false;
     this.isResetEnabled = false;
-
-    if(this.isCurrentschedulePushed){
-        
-        this.resetEvent.emit(this.createUserEvent())
-        this.isCurrentschedulePushed = false;
-    }
+    this.resetEvent.emit(this.createUserEvent())
+        // this.isCurrentschedulePushed = false;
+    
 
   }
 
   validateSelection(date: Date) {
 
-    if(this.isCurrentschedulePushed){
-        this.resetEvent.emit(this.createUserEvent());
-        this.isCurrentschedulePushed=false;
-    }
+    
+    this.resetEvent.emit(this.createUserEvent());
+        // this.isCurrentschedulePushed=false;
     let currentSelectedDate = formatDate(date, 'short', 'en')
     if(this.startDate == '' && this.endDate == ''){
       this.startDate = currentSelectedDate
@@ -236,8 +232,10 @@ export class SchedulerComponent implements OnInit {
     if( this.startDate !== '' && this.endDate !== '') {
         this.isScheduleEnabled = true;
         this.scheduleEvent.emit(this.createUserEvent());
-        this.isCurrentschedulePushed=true;
+        // this.isCurrentschedulePushed=true;
         console.log(this.events);
+    } else{
+        this.isScheduleEnabled = false;
     }
     // this.isScheduleEnabled = this.startDate !== '' && this.endDate !== '' ? true : false
     this.isResetEnabled = this.startDate !== '' || this.endDate !== '' ? true : false
