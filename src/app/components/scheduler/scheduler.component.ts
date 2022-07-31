@@ -69,6 +69,8 @@ export class SchedulerComponent implements OnInit {
 
   startDate: string = '';
   endDate: string = ''
+  isScheduleEnabled: boolean = false;
+  isResetEnabled: boolean = false;
 
   actions: CalendarSchedulerEventAction[] = [
       {
@@ -182,6 +184,13 @@ export class SchedulerComponent implements OnInit {
       this.validateSelection(segment.date);
   }
 
+  onResetClick(){
+    this.startDate = '';
+    this.endDate = '';
+    this.isScheduleEnabled = false;
+    this.isResetEnabled = false;
+  }
+
   validateSelection(date: Date) {
     let currentSelectedDate = formatDate(date, 'short', 'en')
     if(this.startDate == '' && this.endDate == ''){
@@ -201,7 +210,11 @@ export class SchedulerComponent implements OnInit {
         this.endDate = this.startDate;
         this.startDate = currentSelectedDate;
       }
-    } 
+    }
+
+    this.isScheduleEnabled = this.startDate !== '' && this.endDate !== '' ? true : false
+    this.isResetEnabled = this.startDate !== '' || this.endDate !== '' ? true : false
+
     console.log('Start Date', this.startDate);
     console.log('End Date', this.endDate);
   }

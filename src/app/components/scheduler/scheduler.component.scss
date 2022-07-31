@@ -20,13 +20,19 @@
 
 .mat-input-element{
     font-weight: 500;
+    color: darkblue;
 }
+
+// .schedule-button:not(.mat-button-disabled){
+//     color: rgb(59, 59, 59);
+//     background-color: #a4b2ff;
+// }
 
 // .button-group{
 //     align-items: center;
 // }
 
-.mat-raised-button{
+.mat-stroked-button{
     width: 96px
 }
 
