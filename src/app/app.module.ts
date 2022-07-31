@@ -4,6 +4,7 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeIt from '@angular/common/locales/it';
 registerLocaleData(localeIt);
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 
@@ -14,7 +15,10 @@ import { SchedulerModule } from 'angular-calendar-scheduler';
 
 import { AppService } from './services/app.service';
 
-import { MatProgressSpinnerModule } from '@angular/material';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
+
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +26,8 @@ import { MatProgressSpinnerModule } from '@angular/material';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
