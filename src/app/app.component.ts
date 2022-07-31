@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CalendarSchedulerEvent, CalendarSchedulerEventAction, CalendarSchedulerEventStatus } from 'angular-calendar-scheduler';
+import { SchedulerComponent } from './components/scheduler/scheduler.component';
 import { ScheduleDetails } from './interfaces/scheduledetails';
 import { UserSchedule } from './interfaces/userSchedule';
 import { ApiService } from './services/api.service';
@@ -12,6 +13,9 @@ import { ApiService } from './services/api.service';
 })
 export class AppComponent implements OnInit {
     
+
+    @ViewChild(SchedulerComponent) appScheduler : SchedulerComponent;
+
     apiScheduledEvents: ScheduleDetails[];
     events: CalendarSchedulerEvent[];
     actions: CalendarSchedulerEventAction[] = [
@@ -90,6 +94,26 @@ export class AppComponent implements OnInit {
             isDisabled: true
             };
         this.events.push(customeEvent);
-        // console.log(this.events)
+        this.appScheduler.refreshEvents();
       }
+
+    resetUserSchedule(data: UserSchedule){
+
+        this.events.pop();
+        let customeEvent =  <CalendarSchedulerEvent> {
+            id: "88",
+            start: null,
+            end: null,
+            title: "Current Selection",
+            content: "this is your current selection",
+            color: { primary: '#ff6666', secondary: '#00cc66' },
+            actions: this.actions,
+            status: 'ok' as CalendarSchedulerEventStatus,
+            isClickable: false,
+            isDisabled: true
+            };
+        this.events.push(customeEvent);
+        this.appScheduler.refreshEvents();
+        
+    }
 }
