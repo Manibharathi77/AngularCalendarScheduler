@@ -26,6 +26,7 @@ import {
     DateAdapter
 } from 'angular-calendar';
 import { AppService } from '../../services/app.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-scheduler',
@@ -65,6 +66,9 @@ export class SchedulerComponent implements OnInit {
 
   prevBtnDisabled: boolean = false;
   nextBtnDisabled: boolean = false;
+
+  startDate: string = '';
+  endDate: string = ''
 
   actions: CalendarSchedulerEventAction[] = [
       {
@@ -173,8 +177,31 @@ export class SchedulerComponent implements OnInit {
   }
 
   segmentClicked(action: string, segment: SchedulerViewHourSegment): void {
-      console.log('segmentClicked Action', action);
-      console.log('segmentClicked Segment', segment);
+      // console.log('segmentClicked Action', action);
+      // console.log('segmentClicked Segment', segment);
+      this.validateSelection(segment.date);
+  }
+
+  validateSelection(date: Date) {
+    let currentSelectedDate = formatDate(date, 'short', 'en')
+    if(this.startDate == '' && this.endDate == ''){
+      this.startDate = currentSelectedDate
+    }else if(this.startDate != '' && this.endDate != '') {
+      this.startDate = currentSelectedDate;
+      this.endDate = '';
+    } else if(this.startDate != ''){
+      if(new Date(this.startDate).getDate() != new Date(currentSelectedDate).getDate()){
+        this.startDate = currentSelectedDate;
+        this.endDate = '';
+      }else if(Date.parse(currentSelectedDate) > Date.parse(this.startDate)){
+        this.endDate = currentSelectedDate
+      }else {
+        this.endDate = this.startDate;
+        this.startDate = currentSelectedDate;
+      }
+    } 
+    console.log('Start Date', this.startDate);
+    console.log('End Date', this.endDate);
   }
 
   eventClicked(action: string, event: CalendarSchedulerEvent): void {

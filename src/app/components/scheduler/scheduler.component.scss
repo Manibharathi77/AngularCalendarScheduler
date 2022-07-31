@@ -1,13 +1,19 @@
 .scheduler-container {
     width: 800px;
+    max-height: 500px;
+    overflow: scroll;
+}
+
+.calendar-container{
+    width: 800px;
 }
 
 .calendar-details {
     width: 800px;
     display: inline-flex;
-    // justify-content: center;
-    margin-left: 100px;
+    // margin-left: 100px;
     align-items: center;
+    justify-content: center;
 }
 
 .time-group{

@@ -1,4 +1,5 @@
-import { MatFormFieldModule} from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 
@@ -37,8 +38,8 @@ import { SchedulerComponent } from './components/scheduler/scheduler.component';
     }),
     SchedulerModule.forRoot({ locale: 'en', headerDateFormat: 'daysRange', logEnabled: true }),
     MatProgressSpinnerModule,
-    MatFormFieldModule
-    // MatInputModule
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [
     AppService,
