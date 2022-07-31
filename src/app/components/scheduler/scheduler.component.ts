@@ -190,7 +190,9 @@ export class SchedulerComponent implements OnInit {
       this.startDate = currentSelectedDate;
       this.endDate = '';
     } else if(this.startDate != ''){
-      if(new Date(this.startDate).getDate() != new Date(currentSelectedDate).getDate()){
+      if(Date.parse(currentSelectedDate) == Date.parse(this.startDate)){
+        return;
+      } else if(new Date(this.startDate).getDate() != new Date(currentSelectedDate).getDate()){
         this.startDate = currentSelectedDate;
         this.endDate = '';
       }else if(Date.parse(currentSelectedDate) > Date.parse(this.startDate)){

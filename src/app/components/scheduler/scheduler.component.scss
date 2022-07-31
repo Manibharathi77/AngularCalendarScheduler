@@ -6,25 +6,43 @@
 
 .calendar-container{
     width: 800px;
+    margin-left: 100px;
 }
 
 .calendar-details {
+    margin-top: 25px;
     width: 800px;
     display: inline-flex;
     // margin-left: 100px;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
-.time-group{
-    margin-left: 100px;
+.mat-input-element{
+    font-weight: 500;
 }
 
-.start-div {
+// .button-group{
+//     align-items: center;
+// }
+
+.mat-raised-button{
+    width: 96px
+}
+
+// .time-group{
+//     margin-left: 100px;
+// }
+
+.first-div {
     float: left;
 }
 
-.end-div {
+.second-div {
     float: left;
     clear: left
+}
+
+.date-nav-container{
+    margin-top: 30px;
 }

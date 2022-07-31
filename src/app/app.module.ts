@@ -12,11 +12,10 @@ import { AppComponent } from './app.component';
 
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-
 import { SchedulerModule } from 'angular-calendar-scheduler';
 // import {MatFormFieldModule}
 import { AppService } from './services/app.service';
-
+import {MatButtonModule} from '@angular/material/button'
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 // import {MatFormFieldModule, MatInputModule } from '@angular/material';
 
@@ -39,7 +38,8 @@ import { SchedulerComponent } from './components/scheduler/scheduler.component';
     SchedulerModule.forRoot({ locale: 'en', headerDateFormat: 'daysRange', logEnabled: true }),
     MatProgressSpinnerModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatButtonModule 
   ],
   providers: [
     AppService,

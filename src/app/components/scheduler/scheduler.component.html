@@ -5,14 +5,14 @@
 
     <div class="calendar-container" *ngIf="events">
         <div class="calendar-details row mt-4">
-            <div class="details-group">
-                <div class="col-md-4 text-left">
-                </div>
+            <div class="details-group col-md-4">
+                <!-- <div class="col-md-4 text-left">
+                </div> -->
                 <div class="col-md-4 text-center">
                     <h3 class="mt-0">{{ viewDate | calendarSchedulerDate:(view +
                         'ViewTitle'):locale:weekStartsOn:excludeDays:viewDays:startsWithToday }}</h3>
                 </div>
-                <div class="col-md-4 text-right">
+                <div class="date-nav-container col-md-4 text-right">
                     <div class="btn-group m-1" role="group">
                         <button type="button" class="btn btn-primary" mwlCalendarPreviousView [view]="view"
                             [(viewDate)]="viewDate" [daysInWeek]="viewDays" [excludeDays]="excludeDays"
@@ -38,20 +38,29 @@
                 </div>
 
             </div>
-            <div class="time-group">
-                <div class="start-div">
-                    <mat-form-field appearance="standard">
+            <div class="time-group col-md-4">
+                <div class="first-div">
+                    <mat-form-field appearance="fill">
                         <mat-label>Start Time</mat-label>
-                        <input matInput placeholder="Start Time">
+                        <input readonly="readonly" required value={{startDate}} matInput placeholder="Start Time">
                     </mat-form-field>
                 </div>
-                <div class="end-div">
+                <div class="second-div">
                     <mat-form-field appearance="fill">
                         <mat-label>End Time</mat-label>
-                        <input matInput placeholder="End Time">
+                        <input readonly="readonly"  required value={{endDate}} matInput placeholder="End Time">
                     </mat-form-field>
                 </div>
 
+            </div>
+            <div class="button-group col-md-4">
+                <div class="first-div" >
+                    <button mat-raised-button color="primary">Schedule</button>
+                </div>
+                <div style="margin-top: 30px;" class="second-div">
+                    <button mat-raised-button color="accent">Reset</button>
+                </div>
+                
             </div>
         </div>
         <br>
