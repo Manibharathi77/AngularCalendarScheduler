@@ -268,4 +268,9 @@ export class SchedulerComponent implements OnInit {
       ev.end = newEnd;
       this.refresh.next(ev);
   }
+
+  refreshEvents() {
+
+    this.refresh.next(this.events[-1]);
+  }
 }
