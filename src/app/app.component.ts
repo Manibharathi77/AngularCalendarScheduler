@@ -65,9 +65,9 @@ export class AppComponent implements OnInit {
             end: new Date(event.end_timestamp),
             title: event.title,
             content: event.content,
-            color: { primary: '#ff6666', secondary: '#6699ff' },
+            color: { primary: '#3f51b5', secondary: '#3f51b5' },
             actions: this.actions,
-            status: 'ok' as CalendarSchedulerEventStatus,
+            // status: 'ok' as CalendarSchedulerEventStatus,s
             isClickable: false,
             isDisabled: true
             };
@@ -87,9 +87,9 @@ export class AppComponent implements OnInit {
             end: new Date(data.endDate),
             title: "Current Selection",
             content: "this is your current selection",
-            color: { primary: '#ff6666', secondary: '#b3ffd9' },
+            color: { primary: '#009900', secondary: '#009900' },
             actions: this.actions,
-            status: 'ok' as CalendarSchedulerEventStatus,
+            // status: 'ok' as CalendarSchedulerEventStatus,
             isClickable: false,
             isDisabled: true
             };
@@ -106,9 +106,9 @@ export class AppComponent implements OnInit {
             end: null,
             title: "Current Selection",
             content: "this is your current selection",
-            color: { primary: '#ff6666', secondary: '#b3ffd9' },
+            color: { primary: '#3f51b5', secondary: '#3f51b5' },
             actions: this.actions,
-            status: 'ok' as CalendarSchedulerEventStatus,
+            // status: 'ok' as CalendarSchedulerEventStatus,
             isClickable: false,
             isDisabled: true
             };

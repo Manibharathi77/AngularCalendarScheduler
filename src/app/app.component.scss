@@ -10,3 +10,9 @@
     align-items: center;
     height: 100%;
 }
+
+.cal-scheduler-view .cal-scheduler-headers{
+    position: sticky;
+    top: 0;
+    z-index: 100000;
+}

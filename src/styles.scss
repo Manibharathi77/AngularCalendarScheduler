@@ -18,7 +18,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
    
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: red; 
+    background: grey; 
     border-radius: 0.3rem;
   }
   
@@ -26,3 +26,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   ::-webkit-scrollbar-thumb:hover {
     background: #b30000; 
   }
+
+
+  .cal-scheduler-view .cal-scheduler-headers{
+    position: sticky;
+    top: 0;
+    z-index: 100000;
+    background-color: white;
+}
