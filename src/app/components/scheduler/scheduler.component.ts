@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, LOCALE_ID, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, LOCALE_ID, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import {
@@ -18,7 +18,8 @@ import {
     subPeriod,
     SchedulerDateFormatter,
     SchedulerEventTimesChangedEvent,
-    CalendarSchedulerViewComponent
+    CalendarSchedulerViewComponent,
+    CalendarSchedulerEventStatus
 } from 'angular-calendar-scheduler';
 import {
     CalendarView,
@@ -27,6 +28,7 @@ import {
 } from 'angular-calendar';
 import { AppService } from '../../services/app.service';
 import { formatDate } from '@angular/common';
+import { UserSchedule } from 'src/app/interfaces/userSchedule';
 
 @Component({
   selector: 'app-scheduler',
@@ -47,7 +49,7 @@ export class SchedulerComponent implements OnInit {
   viewDays: number = DAYS_IN_WEEK;
   refresh: Subject<any> = new Subject();
   locale: string = 'en';
-  hourSegments : 1 | 2 | 4 | 6 = 2;
+  hourSegments : 1 | 2 | 4 | 6 = 4;
   weekStartsOn: number = 1;
   startsWithToday: boolean = true;
   activeDayIsOpen: boolean = true;
@@ -71,26 +73,34 @@ export class SchedulerComponent implements OnInit {
   endDate: string = ''
   isScheduleEnabled: boolean = false;
   isResetEnabled: boolean = false;
-
+  isCurrentschedulePushed: boolean = false;
+  
   actions: CalendarSchedulerEventAction[] = [
-      {
-          when: 'enabled',
-          label: '<span class="valign-center"><i class="material-icons md-18 md-red-500">cancel</i></span>',
-          title: 'Delete',
-          onClick: (event: CalendarSchedulerEvent): void => {
-              console.log('Pressed action \'Delete\' on event ' + event.id);
-          }
-      },
-      {
-          when: 'disabled',
-          label: '<span class="valign-center"><i class="material-icons md-18 md-red-500">autorenew</i></span>',
-          title: 'Restore',
-          onClick: (event: CalendarSchedulerEvent): void => {
-              console.log('Pressed action \'Restore\' on event ' + event.id);
-          }
-      }
-  ];
+    {
+        when: 'enabled',
+        label: '<span class="valign-center"><i class="material-icons md-18 md-red-500">cancel</i></span>',
+        title: 'Delete',
+        onClick: (event: CalendarSchedulerEvent): void => {
+            console.log('Pressed action \'Delete\' on event ' + event.id);
+        }
+    },
+    {
+        when: 'disabled',
+        label: '<span class="valign-center"><i class="material-icons md-18 md-red-500">autorenew</i></span>',
+        title: 'Restore',
+        onClick: (event: CalendarSchedulerEvent): void => {
+            console.log('Pressed action \'Restore\' on event ' + event.id);
+        }
+    }
+];
 
+    @Output()
+    scheduleEvent = new EventEmitter<UserSchedule>();
+
+    @Output()
+    resetEvent = new EventEmitter<UserSchedule>();
+
+  @Input()
   events: CalendarSchedulerEvent[];
 
   @ViewChild(CalendarSchedulerViewComponent) calendarScheduler: CalendarSchedulerViewComponent;
@@ -124,8 +134,7 @@ export class SchedulerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.appService.getEvents(this.actions)
-          .then((events: CalendarSchedulerEvent[]) => this.events = events);
+     
   }
 
   viewDaysOptionChanged(viewDays: number): void {
@@ -189,9 +198,21 @@ export class SchedulerComponent implements OnInit {
     this.endDate = '';
     this.isScheduleEnabled = false;
     this.isResetEnabled = false;
+
+    if(this.isCurrentschedulePushed){
+        this.events.pop();
+        console.log(this.events);
+        this.isCurrentschedulePushed = false;
+    }
+
   }
 
   validateSelection(date: Date) {
+
+    if(this.isCurrentschedulePushed){
+        this.events.pop();
+        this.isCurrentschedulePushed=false;
+    }
     let currentSelectedDate = formatDate(date, 'short', 'en')
     if(this.startDate == '' && this.endDate == ''){
       this.startDate = currentSelectedDate
@@ -212,13 +233,24 @@ export class SchedulerComponent implements OnInit {
       }
     }
 
-    this.isScheduleEnabled = this.startDate !== '' && this.endDate !== '' ? true : false
+    if( this.startDate !== '' && this.endDate !== '') {
+        this.isScheduleEnabled = true;
+
+        const userEvent = new UserSchedule();
+        userEvent.startDate = this.startDate;
+        userEvent.endDate = this.endDate;
+
+        this.scheduleEvent.emit(userEvent);
+        console.log(this.events);
+    }
+    // this.isScheduleEnabled = this.startDate !== '' && this.endDate !== '' ? true : false
     this.isResetEnabled = this.startDate !== '' || this.endDate !== '' ? true : false
 
     console.log('Start Date', this.startDate);
     console.log('End Date', this.endDate);
   }
 
+  
   eventClicked(action: string, event: CalendarSchedulerEvent): void {
       console.log('eventClicked Action', action);
       console.log('eventClicked Event', event);
